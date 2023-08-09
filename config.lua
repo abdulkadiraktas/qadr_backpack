@@ -25,7 +25,7 @@ qadr_backpacks = {
         boneIndex = 278,
         softping = true,
         vertex = 2,
-        collision = truev
+        collision = true
     },
     p_ambpack05x={
         weight = 2.0,
