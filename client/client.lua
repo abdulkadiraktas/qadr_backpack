@@ -28,21 +28,14 @@ Citizen.CreateThread(function()
             local MaxWeight = qadr_backpacks[tempBackPack].weight
             local currentWeight = stashWweight
             local ratio = currentWeight / MaxWeight
-            blend = math.Clamp(3.0 - ratio, 0.11, 3.0)
-            print(blend)
-            --blend = 1.0 - ratio
-            --if blend <= 0.11 then
-            --    blend = 0.11
-            --elseif blend >= 1.0 then
-            --    blend = 1.0
-            --end
+            blend = calculateBlend(currentWeight,MaxWeight)
         end
     end
 end)
 Citizen.CreateThread(function()
     while qadr_backpacks?.config?.useWeight or false do
         Wait(1)
-        if tempBackPack and blend < 1.0 then
+        if tempBackPack and blend < 3.0 then
             SetPedMaxMoveBlendRatio(PlayerPedId(),blend)
         end
     end

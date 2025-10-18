@@ -11,7 +11,8 @@ function createBackPack(bag)
     end
     tempBackPack = model
     table.insert(tempBackPacks,backpack)
-    AttachEntityToEntity(backpack,ped,qadr_backpacks[model].boneIndex,qadr_backpacks[model].pos.x,qadr_backpacks[model].pos.y,qadr_backpacks[model].pos.z,qadr_backpacks[model].rot.x,qadr_backpacks[model].rot.y,qadr_backpacks[model].rot.z,false,qadr_backpacks[model].softping,qadr_backpacks[model].collision,false,qadr_backpacks[model].vertex,qadr_backpacks[model].fixedRot,false,false)    
+    local boneIndex = qadr_backpacks[model].boneIndex or GetEntityBoneIndexByName(PlayerPedId(), 'CP_Back')
+    AttachEntityToEntity(backpack,ped,boneIndex,qadr_backpacks[model].pos.x,qadr_backpacks[model].pos.y,qadr_backpacks[model].pos.z,qadr_backpacks[model].rot.x,qadr_backpacks[model].rot.y,qadr_backpacks[model].rot.z,false,qadr_backpacks[model].softping,qadr_backpacks[model].collision,false,qadr_backpacks[model].vertex,qadr_backpacks[model].fixedRot,false,false)    
     if not IsEntityAttachedToEntity(backpack,ped) then
         print("attach failed, deleting backpack, try again")
         Wait(1000)
@@ -50,4 +51,14 @@ function deleteAllBackPack()
     end
     tempBackPacks = {}
     tempBackPack = nil
+end
+function calculateBlend(currentWeight, MaxWeight)
+    if currentWeight == MaxWeight then
+        return 0.11
+    elseif currentWeight == 0 then
+        return 3.0
+    else
+        local blend = 3.0 - (3.0 / (MaxWeight / currentWeight))
+        return blend
+    end
 end
